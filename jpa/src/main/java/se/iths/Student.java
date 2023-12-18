@@ -10,7 +10,7 @@ public class Student {
     @Column(name = "studentID", nullable = false)
     private Integer id;
 
-    @Column(name = "studentName", length = 50, unique = true)
+    @Column(name = "studentName", length = 50)
     private String studentName;
 
     @ManyToOne(fetch = FetchType.LAZY)

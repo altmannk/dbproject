@@ -10,7 +10,7 @@ public class Course {
     @Column(name = "courseID", nullable = false)
     private Integer id;
 
-    @Column(name = "courseName", length = 50)
+    @Column(name = "courseName", length = 50, unique = true)
     private String courseName;
 
     @Column(name = "courseEvaluation")
