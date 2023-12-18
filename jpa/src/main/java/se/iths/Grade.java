@@ -10,7 +10,7 @@ public class Grade {
     @Column(name = "gradeID", nullable = false)
     private Integer id;
 
-    @Column(name = "gradeValue", length = 2)
+    @Column(name = "gradeValue", length = 2, unique = true)
     private String gradeValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
