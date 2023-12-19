@@ -19,7 +19,7 @@ public class Main {
         em.close();
     }
 
-    private static void printAction() {
+    private static void printActionMainMenu() {
         System.out.println("\nMenu\n");
         System.out.println("""
                 0. Exit
@@ -32,7 +32,7 @@ public class Main {
 
     static void menu(EntityManager em) {
         boolean running = true;
-        printAction();
+        printActionMainMenu();
 
         while (running) {
             System.out.print("\nChoose ('4' to show menu again): ");
@@ -43,11 +43,12 @@ public class Main {
                     System.out.println("\nExited");
                     running = false;
                 }
-                case "1" -> StatisticsProgram.statisticsForAllCourses(em);
+                case "1" -> menuProgram(em);
                 case "2" -> CrudStudent.crudTest();
                 case "3" -> CrudStudent.crudTest();
-                case "4" -> printAction();
-            };
+                case "4" -> printActionMainMenu();
+            }
+            ;
 
 
         }
