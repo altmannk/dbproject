@@ -13,10 +13,6 @@ public class Student {
     @Column(name = "studentName", length = 50)
     private String studentName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "studentCourseID")
-    private Course studentCourseID;
-
     public Integer getId() {
         return id;
     }
@@ -31,14 +27,6 @@ public class Student {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
-    }
-
-    public Course getStudentCourseID() {
-        return studentCourseID;
-    }
-
-    public void setStudentCourseID(Course studentCourseID) {
-        this.studentCourseID = studentCourseID;
     }
 
 }

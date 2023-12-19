@@ -10,12 +10,16 @@ public class Grade {
     @Column(name = "gradeID", nullable = false)
     private Integer id;
 
-    @Column(name = "gradeValue", length = 2, unique = true)
+    @Column(name = "gradeValue", length = 2)
     private String gradeValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gradeStudentID")
     private Student gradeStudentID;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gradeCourseID")
+    private Course gradeCourseID;
 
     public Integer getId() {
         return id;
@@ -33,8 +37,6 @@ public class Grade {
         this.gradeValue = gradeValue;
     }
 
-
-
     public Student getGradeStudentID() {
         return gradeStudentID;
     }
@@ -43,13 +45,12 @@ public class Grade {
         this.gradeStudentID = gradeStudentID;
     }
 
-
-    @Override
-    public String toString() {
-        return "Grade{" +
-                "id=" + id +
-                ", gradeValue='" + gradeValue + '\'' +
-                ", gradeStudentID=" + gradeStudentID +
-                '}';
+    public Course getGradeCourseID() {
+        return gradeCourseID;
     }
+
+    public void setGradeCourseID(Course gradeCourseID) {
+        this.gradeCourseID = gradeCourseID;
+    }
+
 }
