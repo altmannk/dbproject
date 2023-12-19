@@ -2,7 +2,6 @@ package se.iths;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -48,9 +47,6 @@ public class Main {
                 case "3" -> CrudStudent.crudTest();
                 case "4" -> printActionMainMenu();
             }
-            ;
-
-
         }
     }
 
