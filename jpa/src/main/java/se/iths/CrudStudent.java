@@ -9,7 +9,7 @@ public class CrudStudent {
         System.out.println("test");
     }
 
-    public static void createStudent(String name, String cName){
+   /* public static void createStudent(String name, String cName){
         Main.inTransaction(em ->{
             Student student = new Student();
             student.setStudentName(name);
@@ -19,7 +19,7 @@ public class CrudStudent {
             em.persist(student);
         });
 
-    }
+    }*/
 
     public static void updateStudent(String name, String courseName, String newGrade){
         Main.inTransaction(em ->{
