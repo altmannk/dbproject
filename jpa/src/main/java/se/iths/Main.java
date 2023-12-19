@@ -16,7 +16,6 @@ public class Main {
         menu(em);
 
 
-
         em.close();
     }
 
@@ -31,15 +30,15 @@ public class Main {
                 """);
     }
 
-    static void menu(EntityManager em){
+    static void menu(EntityManager em) {
         boolean running = true;
         printAction();
 
-        while (running){
+        while (running) {
             System.out.print("\nChoose ('4' to show menu again): ");
             String choice = sc.nextLine();
 
-            switch (choice){
+            switch (choice) {
                 case "0" -> {
                     System.out.println("\nExited");
                     running = false;
@@ -51,10 +50,42 @@ public class Main {
             };
 
 
-
         }
     }
 
+    private static void printActionProgramMenu() {
+        System.out.println("\nProgram menu\n");
+        System.out.println("""
+                0. Exit
+                1. Statistics for specific course
+                2. -
+                3. -
+                4. Go back to main menu
+                """);
+    }
+
+    static void menuProgram(EntityManager em) {
+        boolean running = true;
+        printActionProgramMenu();
+
+        while (running) {
+            System.out.print("\nChoose ('4' to go back to main menu): ");
+            String choice = sc.nextLine();
+
+            switch (choice) {
+                case "0" -> {
+                    System.out.println("\nExited");
+                    running = false;
+                }
+                case "1" -> StatisticsProgram.statisticsForSpecificCourse(em);
+                //case "2" ->
+                //case "3" ->
+                case "4" -> menu(em);
+            }
+            ;
+
+        }
+    }
 
     static void inTransaction(Consumer<EntityManager> work) {
         try (EntityManager entityManager = JPAUtil.getEntityManager()) {
