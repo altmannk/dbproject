@@ -33,6 +33,8 @@ public class Grade {
         this.gradeValue = gradeValue;
     }
 
+
+
     public Student getGradeStudentID() {
         return gradeStudentID;
     }
@@ -41,4 +43,13 @@ public class Grade {
         this.gradeStudentID = gradeStudentID;
     }
 
+
+    @Override
+    public String toString() {
+        return "Grade{" +
+                "id=" + id +
+                ", gradeValue='" + gradeValue + '\'' +
+                ", gradeStudentID=" + gradeStudentID +
+                '}';
+    }
 }

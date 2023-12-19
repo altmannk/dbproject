@@ -11,23 +11,50 @@ public class Main {
     public static void main(String[] args) {
         EntityManager em = JPAUtil.getEntityManager();
 
-        System.out.print("Enter search term: ");
-        Scanner scanner = new Scanner(System.in);
-        String name = scanner.nextLine();
+        //CrudStudent.createStudent("Thomas", "Javaprogrammering");
 
-        // Validate user input
-        if (name == null || name.isEmpty()) {
-            System.out.println("Invalid input.");
-            return;
-        }
+        menu(em);
 
-        TypedQuery<Country> query = em.createQuery("SELECT c FROM Country c WHERE c.countryName = :name", Country.class);
-        query.setParameter("name", name);
-        List<Country> countries = query.getResultList();
-        countries.forEach(System.out::println);
+
 
         em.close();
     }
+
+    private static void printAction() {
+        System.out.println("\nMenu\n");
+        System.out.println("""
+                0. Exit
+                1. Program
+                2. Teacher
+                3. Administration
+                4. Show menu choices
+                """);
+    }
+
+    static void menu(EntityManager em){
+        boolean running = true;
+        printAction();
+
+        while (running){
+            System.out.print("\nChoose ('4' to show menu again): ");
+            String choice = sc.nextLine();
+
+            switch (choice){
+                case "0" -> {
+                    System.out.println("\nExited");
+                    running = false;
+                }
+                case "1" -> StatisticsProgram.statisticsForAllCourses(em);
+                case "2" -> CrudStudent.crudTest();
+                case "3" -> CrudStudent.crudTest();
+                case "4" -> printAction();
+            };
+
+
+
+        }
+    }
+
 
     static void inTransaction(Consumer<EntityManager> work) {
         try (EntityManager entityManager = JPAUtil.getEntityManager()) {
