@@ -14,18 +14,18 @@ public class Main {
         EntityManager em = JPAUtil.getEntityManager();
 
 
-        CrudStudent.createStudent("Jultomten");
+        /*CrudStudent.createStudent("Jultomten");
         CrudStudent.updateStudent("Jultomten", "Santa");
         CrudGrade.createGrade("Santa", "Javaprogrammering", "IG");
         CrudGrade.updateGrade("Santa", "Javaprogrammering", "G");
         CrudStudent.readStudent("Santa");
-        //CrudStudent.deleteStudent("Santa");
+        //CrudStudent.deleteStudent("Santa"); */
         menu(em);
 
         em.close();
     }
 
-    private static void printAction() {
+    public static void printAction() {
         System.out.println("\nMenu\n");
         System.out.println("""
                 0. Exit
@@ -51,7 +51,7 @@ public class Main {
                 }
                 case "1" -> StatisticsProgram.statisticsForAllCourses(em);
                 case "2" -> CrudStudent.crudTest();
-                case "3" -> CrudStudent.crudTest();
+                case "3" -> AdminMenu.crudMenu();
                 case "4" -> printAction();
             };
 
