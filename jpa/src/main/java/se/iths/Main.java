@@ -8,9 +8,18 @@ import java.util.function.Consumer;
 
 public class Main {
 
+    private static final Scanner sc =  new Scanner(System.in);
+
     public static void main(String[] args) {
         EntityManager em = JPAUtil.getEntityManager();
 
+
+        CrudStudent.createStudent("Jultomten");
+        CrudStudent.updateStudent("Jultomten", "Santa");
+        CrudGrade.createGrade("Santa", "Javaprogrammering", "IG");
+        CrudGrade.updateGrade("Santa", "Javaprogrammering", "G");
+        CrudStudent.readStudent("Santa");
+        //CrudStudent.deleteStudent("Santa");
         menu(em);
 
         em.close();
