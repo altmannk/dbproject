@@ -67,10 +67,7 @@ public class StatisticsProgram {
     /**
      * gets all grades for a specified course then prints average values for each grade
      */
-    public static void statisticsForSpecificCourse(EntityManager em) {
-        //List<String> grades = createListOfGradesForSpecificCourse(em, "javaprogrammering");
-
-        List<String> grades = getGradesForCourse("Javaprogrammering");
+    public static void statisticsForSpecificCourse(String courseName) {
 
         // ta ut betyg för enskild kurs
         List<String> listOfGrades = getGradesForCourse(courseName);

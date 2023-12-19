@@ -22,8 +22,8 @@ public class Main {
         System.out.println("\nMenu\n");
         System.out.println("""
                 0. Exit
-                1. Program
-                2. Teacher
+                1. Statistics for specific course
+                2. Statistics for all courses
                 3. Administration
                 4. Show menu choices
                 """);
@@ -39,50 +39,17 @@ public class Main {
 
             switch (choice) {
                 case "0" -> {
-                    System.out.println("\nExited");
+                    System.out.println("\nExit");
                     running = false;
                 }
-                case "1" -> menuProgram(em);
-                case "2" -> CrudStudent.crudTest();
+                case "1" -> StatisticsProgram.statisticsForSpecificCourse("Javaprogrammering");
+                case "2" -> StatisticsProgram.statisticsForAllCourses();
                 case "3" -> CrudStudent.crudTest();
                 case "4" -> printActionMainMenu();
             }
         }
     }
 
-    private static void printActionProgramMenu() {
-        System.out.println("\nProgram menu\n");
-        System.out.println("""
-                0. Exit
-                1. Statistics for specific course
-                2. -
-                3. -
-                4. Go back to main menu
-                """);
-    }
-
-    static void menuProgram(EntityManager em) {
-        boolean running = true;
-        printActionProgramMenu();
-
-        while (running) {
-            System.out.print("\nChoose ('4' to go back to main menu): ");
-            String choice = sc.nextLine();
-
-            switch (choice) {
-                case "0" -> {
-                    System.out.println("\nExited");
-                    running = false;
-                }
-                case "1" -> StatisticsProgram.statisticsForSpecificCourse(em);
-                //case "2" ->
-                //case "3" ->
-                case "4" -> menu(em);
-            }
-            ;
-
-        }
-    }
 
     static void inTransaction(Consumer<EntityManager> work) {
         try (EntityManager entityManager = JPAUtil.getEntityManager()) {
