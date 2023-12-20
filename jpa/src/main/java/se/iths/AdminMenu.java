@@ -7,7 +7,7 @@ public class AdminMenu {
     private static Scanner sc = new Scanner(System.in);
 
     public static void crudMenu(){
-        boolean running =true;
+        boolean running = true;
         printCrudAction();
 
         while (running){

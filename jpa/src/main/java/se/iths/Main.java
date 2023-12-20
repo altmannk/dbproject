@@ -47,7 +47,7 @@ public class Main {
                     running = false;
                 }
 
-                case "1" -> StatisticsProgram.statisticsForSpecificCourse("Javaprogrammering");
+                case "1" -> StatisticsProgram.statisticsForSpecificCourse();
                 case "2" -> StatisticsProgram.statisticsForAllCourses();
                 case "3" -> AdminMenu.crudMenu();
                 case "4" -> printActionMainMenu();
