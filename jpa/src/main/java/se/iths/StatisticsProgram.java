@@ -4,10 +4,25 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class StatisticsProgram {
+    private static final Scanner fetch = new Scanner(System.in);
 
+
+    public static List<String> getListOfCourses() {
+        List<String> listOfCourses = new ArrayList<>();
+        Main.inTransaction(em -> {
+            TypedQuery<Course> query = em.createQuery("SELECT c FROM Course c", Course.class);
+            List<Course > course = query.getResultList();
+
+            for (Course curCourse : course) {
+                listOfCourses.add(curCourse.getCourseName());
+            }
+        });
+        return listOfCourses;
+    }
 
     public static List<String> getGradesForAllCourses() {
         List<String> listOfGrades = new ArrayList<>();
@@ -59,6 +74,7 @@ public class StatisticsProgram {
         }
 
         // ig / 3 = procent ... samma med g vg
+        System.out.println("\nJavautvecklare, all courses:\n");
         System.out.println("Percentage of IG: " + (igCounter / listOfGrades.size()) * 100 + "%");
         System.out.println("Percentage of G: " + (gCounter / listOfGrades.size()) * 100 + "%");
         System.out.println("Percentage of VG: " + (vgCounter / listOfGrades.size()) * 100 + "%");
@@ -67,7 +83,23 @@ public class StatisticsProgram {
     /**
      * gets all grades for a specified course then prints average values for each grade
      */
-    public static void statisticsForSpecificCourse(String courseName) {
+    public static void statisticsForSpecificCourse() {
+
+        // fråga vilken kurs
+        String courseName = "";
+        boolean running = true;
+        List<String> listOfCourses = getListOfCourses();
+        System.out.println("Enter course: ");
+
+        while(running){
+            courseName = fetch.nextLine();
+            // om coursename finns i lista med databaser
+            if (listOfCourses.contains(courseName)){
+                running = false;
+            }else {
+                System.out.println("Invalid entry, enter again: ");
+            }
+        }
 
         // ta ut betyg för enskild kurs
         List<String> listOfGrades = getGradesForCourse(courseName);
@@ -86,6 +118,7 @@ public class StatisticsProgram {
         }
 
         // ig / 3 = procent ... samma med g vg
+        System.out.println("\n" + courseName + ":\n");
         System.out.println("Percentage of IG: " + (igCounter / listOfGrades.size()) * 100 + "%");
         System.out.println("Percentage of G: " + (gCounter / listOfGrades.size()) * 100 + "%");
         System.out.println("Percentage of VG: " + (vgCounter / listOfGrades.size()) * 100 + "%");
