@@ -13,12 +13,7 @@ public class Main {
         EntityManager em = JPAUtil.getEntityManager();
 
 
-        /*CrudStudent.createStudent("Jultomten");
-        CrudStudent.updateStudent("Jultomten", "Santa");
-        CrudGrade.createGrade("Santa", "Javaprogrammering", "IG");
-        CrudGrade.updateGrade("Santa", "Javaprogrammering", "G");
-        CrudStudent.readStudent("Santa");
-        //CrudStudent.deleteStudent("Santa"); */
+
         menu(em);
 
 
@@ -26,7 +21,7 @@ public class Main {
         em.close();
     }
 
-    private static void printActionMainMenu() {
+    public static void printActionMainMenu() {
 
       System.out.println("\nMenu\n");
         System.out.println("""

@@ -18,7 +18,7 @@ public class AdminMenu {
                 case "0" -> {
                     System.out.println("\nExited");
                     running = false;
-                    Main.printAction();
+                    Main.printActionMainMenu();
                 }
                 case "1" -> {
                     System.out.println("\nEnter student name.");
