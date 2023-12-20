@@ -64,4 +64,11 @@ public class Course {
         this.courseTeacherID = courseTeacherID;
     }
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", courseName='" + courseName + '\'' +
+                '}';
+    }
 }

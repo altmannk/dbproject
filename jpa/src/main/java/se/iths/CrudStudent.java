@@ -11,6 +11,7 @@ public class CrudStudent {
         System.out.println("test");
     }
 
+ 
     public static void createStudent(String name){
         Main.inTransaction(em ->{
             Student student = new Student();
@@ -27,6 +28,7 @@ public class CrudStudent {
             student.setStudentName(newName);
         });
     }
+
 
     public static void deleteStudent(String name){
         Main.inTransaction(em ->{

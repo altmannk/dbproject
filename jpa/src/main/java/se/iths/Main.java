@@ -2,7 +2,6 @@ package se.iths;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -22,41 +21,42 @@ public class Main {
         //CrudStudent.deleteStudent("Santa"); */
         menu(em);
 
+
+
         em.close();
     }
 
-    public static void printAction() {
-        System.out.println("\nMenu\n");
+    private static void printActionMainMenu() {
+
+      System.out.println("\nMenu\n");
         System.out.println("""
                 0. Exit
-                1. Program
-                2. Teacher
+                1. Statistics for specific course
+                2. Statistics for all courses
                 3. Administration
                 4. Show menu choices
                 """);
     }
 
-    static void menu(EntityManager em){
+    static void menu(EntityManager em) {
         boolean running = true;
-        printAction();
+        printActionMainMenu();
 
-        while (running){
+        while (running) {
             System.out.print("\nChoose ('4' to show menu again): ");
             String choice = sc.nextLine();
 
-            switch (choice){
+            switch (choice) {
                 case "0" -> {
-                    System.out.println("\nExited");
+                    System.out.println("\nExit");
                     running = false;
                 }
-                case "1" -> StatisticsProgram.statisticsForAllCourses(em);
-                case "2" -> CrudStudent.crudTest();
+
+                case "1" -> StatisticsProgram.statisticsForSpecificCourse("Javaprogrammering");
+                case "2" -> StatisticsProgram.statisticsForAllCourses();
                 case "3" -> AdminMenu.crudMenu();
-                case "4" -> printAction();
-            };
-
-
-
+                case "4" -> printActionMainMenu();
+            }
         }
     }
 
