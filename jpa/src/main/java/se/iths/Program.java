@@ -13,9 +13,6 @@ public class Program {
     @Column(name = "programName", length = 50, unique = true)
     private String programName;
 
-    @Column(name = "programYear")
-    private Integer programYear;
-
     public Integer getId() {
         return id;
     }
@@ -30,14 +27,6 @@ public class Program {
 
     public void setProgramName(String programName) {
         this.programName = programName;
-    }
-
-    public Integer getProgramYear() {
-        return programYear;
-    }
-
-    public void setProgramYear(Integer programYear) {
-        this.programYear = programYear;
     }
 
 }

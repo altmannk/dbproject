@@ -10,11 +10,8 @@ public class Course {
     @Column(name = "courseID", nullable = false)
     private Integer id;
 
-    @Column(name = "courseName", length = 50, unique = true)
+    @Column(name = "courseName", length = 50)
     private String courseName;
-
-    @Column(name = "courseEvaluation")
-    private Integer courseEvaluation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "courseProgramID")
@@ -40,14 +37,6 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public Integer getCourseEvaluation() {
-        return courseEvaluation;
-    }
-
-    public void setCourseEvaluation(Integer courseEvaluation) {
-        this.courseEvaluation = courseEvaluation;
-    }
-
     public Program getCourseProgramID() {
         return courseProgramID;
     }
@@ -64,11 +53,4 @@ public class Course {
         this.courseTeacherID = courseTeacherID;
     }
 
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", courseName='" + courseName + '\'' +
-                '}';
-    }
 }
