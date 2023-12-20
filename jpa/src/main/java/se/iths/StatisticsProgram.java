@@ -1,8 +1,6 @@
 package se.iths;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,35 +8,93 @@ import java.util.function.Consumer;
 
 public class StatisticsProgram {
 
-    static List<Grade> createListOfGrades(EntityManager em) {
-        List<Grade> grades = new ArrayList(){};
-        String jpql = "SELECT g FROM Grade g";
-        TypedQuery<Grade> query = em.createQuery(jpql, Grade.class);
-        List<Grade> resultList = query.getResultList();
 
-        for (Grade grade : resultList) {
-            grades.add(grade);
-        }
+    public static List<String> getGradesForAllCourses() {
+        List<String> listOfGrades = new ArrayList<>();
+                Main.inTransaction(em -> {
+                    TypedQuery<Grade> query = em.createQuery("SELECT g FROM Grade g", Grade.class);
+                    List<Grade > grades = query.getResultList();
 
-        return grades;
+                    for (Grade curGrade : grades) {
+                        listOfGrades.add(curGrade.getGradeValue());
+                    }
+                });
+        return listOfGrades;
     }
 
-    public static void statisticsForAllCourses(EntityManager em){
-        List<Grade> grades = createListOfGrades(em);
-        // få in alla kurser
-        for (Grade curGrade : grades){
-            System.out.println(curGrade);
-        }
-        // ta ut alla betyg
+    /**
+     * returns a list of strings containing all the grades for specified course
+     */
+    public static List<String> getGradesForCourse(String courseName) {
+        List<String> listOfGrades = new ArrayList<>();
+        Main.inTransaction(em -> {
+            TypedQuery<Course> query = em.createQuery("SELECT c FROM Course c WHERE c.courseName = :courseName", Course.class).setParameter("courseName", courseName);
+            Course course = query.getSingleResult();
+            System.out.println(course.getCourseName());
 
-        // räkna hur många av varje
+            TypedQuery<Grade> query2 = em.createQuery("SELECT g FROM Grade g WHERE g.gradeCourseID = :id", Grade.class).setParameter("id", course);
+            List<Grade> grades = query2.getResultList();
 
-        // räkna ut prcent för varje betyg IG, G, VG
-
-        // printa ut dom
-
+            for (Grade curGrade : grades) {
+                listOfGrades.add(curGrade.getGradeValue());
+            }
+        });
+        return listOfGrades;
     }
 
+    public static void statisticsForAllCourses() {
+        List<String> listOfGrades = getGradesForAllCourses();
+
+        // räkna ut hur många som har ig g vg
+        double igCounter = 0.0;
+        double gCounter = 0.0;
+        double vgCounter = 0.0;
+        for (String currentGrade : listOfGrades) {
+            if (currentGrade.equals("IG"))
+                igCounter++;
+            if (currentGrade.equals("G"))
+                gCounter++;
+            if (currentGrade.equals("VG"))
+                vgCounter++;
+        }
+
+        // ig / 3 = procent ... samma med g vg
+        System.out.println("Percentage of IG: " + (igCounter / listOfGrades.size()) * 100 + "%");
+        System.out.println("Percentage of G: " + (gCounter / listOfGrades.size()) * 100 + "%");
+        System.out.println("Percentage of VG: " + (vgCounter / listOfGrades.size()) * 100 + "%");
+    }
+
+    /**
+     * gets all grades for a specified course then prints average values for each grade
+     */
+    public static void statisticsForSpecificCourse(String courseName) {
+
+        // ta ut betyg för enskild kurs
+        List<String> listOfGrades = getGradesForCourse(courseName);
+
+        // räkna ut hur många som har ig g vg
+        double igCounter = 0.0;
+        double gCounter = 0.0;
+        double vgCounter = 0.0;
+        for (String currentGrade : listOfGrades) {
+            if (currentGrade.equals("IG"))
+                igCounter++;
+            if (currentGrade.equals("G"))
+                gCounter++;
+            if (currentGrade.equals("VG"))
+                vgCounter++;
+        }
+
+        // ig / 3 = procent ... samma med g vg
+        System.out.println("Percentage of IG: " + (igCounter / listOfGrades.size()) * 100 + "%");
+        System.out.println("Percentage of G: " + (gCounter / listOfGrades.size()) * 100 + "%");
+        System.out.println("Percentage of VG: " + (vgCounter / listOfGrades.size()) * 100 + "%");
+    }
+
+
+    /**
+     * ???????
+     */
     static void inTransaction(Consumer<EntityManager> work) {
         try (EntityManager entityManager = JPAUtil.getEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
@@ -54,6 +110,5 @@ public class StatisticsProgram {
             }
         }
     }
-
 
 }
