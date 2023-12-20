@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class StatisticsProgram {
+    private static final Scanner fetch = new Scanner(System.in);
 
 
     public static List<String> getListOfCourses() {
@@ -73,6 +74,7 @@ public class StatisticsProgram {
         }
 
         // ig / 3 = procent ... samma med g vg
+        System.out.println("\nJavautvecklare, all courses:\n");
         System.out.println("Percentage of IG: " + (igCounter / listOfGrades.size()) * 100 + "%");
         System.out.println("Percentage of G: " + (gCounter / listOfGrades.size()) * 100 + "%");
         System.out.println("Percentage of VG: " + (vgCounter / listOfGrades.size()) * 100 + "%");
@@ -116,6 +118,7 @@ public class StatisticsProgram {
         }
 
         // ig / 3 = procent ... samma med g vg
+        System.out.println("\n" + courseName + ":\n");
         System.out.println("Percentage of IG: " + (igCounter / listOfGrades.size()) * 100 + "%");
         System.out.println("Percentage of G: " + (gCounter / listOfGrades.size()) * 100 + "%");
         System.out.println("Percentage of VG: " + (vgCounter / listOfGrades.size()) * 100 + "%");
