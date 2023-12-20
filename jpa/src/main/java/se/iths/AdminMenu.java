@@ -11,7 +11,6 @@ public class AdminMenu {
         printCrudAction();
 
         while (running){
-            System.out.print("\nChoose ('4' to show menu again): ");
             String choice = sc.nextLine();
 
             switch (choice){
@@ -21,14 +20,51 @@ public class AdminMenu {
                     Main.printActionMainMenu();
                 }
                 case "1" -> {
-                    System.out.println("\nEnter student name.");
+                    System.out.println("\nEnter student name for new student.");
                     String name = sc.nextLine();
                     CrudStudent.createStudent(name);
                     printCrudAction();
                 }
-                case "2" -> CrudStudent.crudTest();
-                case "3" -> CrudStudent.crudTest();
-                //case "4" -> printAction();
+                case "2" -> {
+                    System.out.println("\nEnter student name to show grades for.");
+                    String name = sc.nextLine();
+                    CrudStudent.readStudent(name);
+                    printCrudAction();
+                } //readStudent
+                case "3" -> {
+                    System.out.println("\nEnter student name to add grade to.");
+                    String name = sc.nextLine();
+                    System.out.println("\nEnter course name.");
+                    String cName = sc.nextLine();
+                    System.out.println("\nEnter grade.");
+                    String grade = sc.nextLine();
+                    CrudGrade.createGrade(name, cName,grade);
+                    printCrudAction();
+                }//addGrade
+                case "4" -> {
+                    System.out.println("\nEnter student name to update grade for.");
+                    String name = sc.nextLine();
+                    System.out.println("\nEnter course name.");
+                    String cName = sc.nextLine();
+                    System.out.println("\nEnter new grade.");
+                    String newGrade = sc.nextLine();
+                    CrudGrade.updateGrade(name, cName, newGrade);
+                    printCrudAction();
+                }//changeGrade
+                case "5" -> {
+                    System.out.println("\nEnter student name to change.");
+                    String name = sc.nextLine();
+                    System.out.println("\nEnter new name.");
+                    String newName = sc.nextLine();
+                    CrudStudent.updateStudent(name, newName);
+                    printCrudAction();
+                }//changeStudentName
+                case "6" -> {
+                    System.out.println("\nEnter student name to delete.");
+                    String name = sc.nextLine();
+                    CrudStudent.deleteStudent(name);
+                    printCrudAction();
+                }//deleteStudent
             };
 
 
