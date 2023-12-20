@@ -11,7 +11,7 @@ public class Student {
     @Column(name = "studentID", nullable = false)
     private Integer id;
 
-    @Column(name = "studentName", length = 50)
+    @Column(name = "studentName", length = 50, unique = true)
     private String studentName;
 
     public Integer getId() {
