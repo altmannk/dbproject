@@ -24,10 +24,7 @@ public class AdminMenu {
                     Main.printActionMainMenu();
                 }
                 case "1" -> {
-                    System.out.println("\nEnter student name for new student.");
-                    String name = sc.nextLine();
-                    CrudStudent.createStudent(name);
-                    printCrudAction();
+                    addStudent();
                 }
                 case "2" -> {
                     System.out.println("\nEnter student name to show grades for.");
@@ -36,24 +33,10 @@ public class AdminMenu {
                     printCrudAction();
                 } //readStudent
                 case "3" -> {
-                    System.out.println("\nEnter student name to add grade to.");
-                    String name = sc.nextLine();
-                    System.out.println("\nEnter course name.");
-                    String cName = sc.nextLine();
-                    System.out.println("\nEnter grade.");
-                    String grade = sc.nextLine();
-                    CrudGrade.createGrade(name, cName,grade);
-                    printCrudAction();
+                    addGrade();
                 }//addGrade
                 case "4" -> {
-                    System.out.println("\nEnter student name to update grade for.");
-                    String name = sc.nextLine();
-                    System.out.println("\nEnter course name.");
-                    String cName = sc.nextLine();
-                    System.out.println("\nEnter new grade.");
-                    String newGrade = sc.nextLine();
-                    CrudGrade.updateGrade(name, cName, newGrade);
-                    printCrudAction();
+                    addGrade();//ska bytas
                 }//changeGrade
                 case "5" -> {
                     System.out.println("\nEnter student name to change.");
@@ -76,6 +59,66 @@ public class AdminMenu {
         }
 
     }
+
+    private static void addGrade(){
+        Main.inTransaction(em ->{
+            boolean done = false;
+            List<Student> students;
+            String name ="";
+            while(!done){
+                System.out.println("\nEnter student name to add grade for.");
+                name = sc.nextLine();
+                TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.studentName =: name", Student.class).setParameter("name",name);
+                students  = query.getResultList();
+                if (!students.isEmpty())
+                    done=true;
+            }
+
+            done = false;
+            List<Course> courses;
+            String course="";
+
+            while(!done){
+                System.out.println("\nEnter course name to add grade for:");
+                course = sc.nextLine();
+                TypedQuery<Course> query = em.createQuery("SELECT c FROM Course c WHERE c.courseName =: course", Course.class).setParameter("course", course);
+                 courses = query.getResultList();
+                if (!courses.isEmpty())
+                    done=true;
+            }
+
+            done = false;
+            String grade="";
+            while (!done){
+                System.out.println("\nEnter grade value:");
+                grade = sc.nextLine();
+                if (grade.equals("G")||grade.equals("VG")||grade.equals("IG"))
+                    done=true;
+            }
+            CrudGrade.createGrade(name,course,grade);
+        });
+printCrudAction();
+    }
+
+    private static void addStudent(){
+
+        System.out.println("\nEnter student name for new student.");
+        String name = sc.nextLine();
+
+        //gör en version med loop och felchecking
+
+        CrudStudent.createStudent(name);
+        System.out.println("\nEnter course name.");
+        String cName = sc.nextLine();
+        System.out.println("\nEnter grade.");
+        String grade = sc.nextLine();
+        CrudGrade.createGrade(name, cName,grade);
+
+
+        printCrudAction();
+    }
+
+
 
 
     private static void printCrudAction() {

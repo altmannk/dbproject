@@ -1,6 +1,10 @@
 package se.iths;
 
 import jakarta.persistence.TypedQuery;
+import org.hibernate.annotations.TypeRegistration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CrudGrade {
 
