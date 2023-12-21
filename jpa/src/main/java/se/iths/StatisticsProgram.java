@@ -15,7 +15,7 @@ public class StatisticsProgram {
         List<String> listOfCourses = new ArrayList<>();
         Main.inTransaction(em -> {
             TypedQuery<Course> query = em.createQuery("SELECT c FROM Course c", Course.class);
-            List<Course > course = query.getResultList();
+            List<Course> course = query.getResultList();
 
             for (Course curCourse : course) {
                 listOfCourses.add(curCourse.getCourseName());
@@ -26,14 +26,14 @@ public class StatisticsProgram {
 
     public static List<String> getGradesForAllCourses() {
         List<String> listOfGrades = new ArrayList<>();
-                Main.inTransaction(em -> {
-                    TypedQuery<Grade> query = em.createQuery("SELECT g FROM Grade g", Grade.class);
-                    List<Grade > grades = query.getResultList();
+        Main.inTransaction(em -> {
+            TypedQuery<Grade> query = em.createQuery("SELECT g FROM Grade g", Grade.class);
+            List<Grade> grades = query.getResultList();
 
-                    for (Grade curGrade : grades) {
-                        listOfGrades.add(curGrade.getGradeValue());
-                    }
-                });
+            for (Grade curGrade : grades) {
+                listOfGrades.add(curGrade.getGradeValue());
+            }
+        });
         return listOfGrades;
     }
 
@@ -91,12 +91,12 @@ public class StatisticsProgram {
         List<String> listOfCourses = getListOfCourses();
         System.out.println("Enter course: ");
 
-        while(running){
+        while (running) {
             courseName = fetch.nextLine();
             // om coursename finns i lista med databaser
-            if (listOfCourses.contains(courseName)){
+            if (listOfCourses.contains(courseName)) {
                 running = false;
-            }else {
+            } else {
                 System.out.println("Invalid entry, enter again: ");
             }
         }
