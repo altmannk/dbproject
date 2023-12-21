@@ -12,11 +12,7 @@ public class Main {
     public static void main(String[] args) {
         EntityManager em = JPAUtil.getEntityManager();
 
-
-
         menu(em);
-
-
 
         em.close();
     }
@@ -46,7 +42,6 @@ public class Main {
                     System.out.println("\nExit");
                     running = false;
                 }
-
                 case "1" -> StatisticsProgram.statisticsForSpecificCourse();
                 case "2" -> StatisticsProgram.statisticsForAllCourses();
                 case "3" -> AdminMenu.crudMenu();

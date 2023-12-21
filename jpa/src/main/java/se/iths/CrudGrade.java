@@ -15,7 +15,6 @@ public class CrudGrade {
                 Grade g = new Grade();
                 g.setGradeValue(grade);
 
-
                 TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.studentName = :studentName", Student.class).setParameter("studentName", studentName);
                 Student student = query.getSingleResult();
                 g.setGradeStudentID(student);
@@ -56,6 +55,4 @@ public class CrudGrade {
             grade.setGradeValue(newGrade);
         });
     }
-
-
 }

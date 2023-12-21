@@ -7,19 +7,12 @@ import java.util.List;
 
 public class CrudStudent {
 
-    public static void crudTest() {
-        System.out.println("test");
-    }
-
-
     public static void createStudent(String name) {
-
         Main.inTransaction(em -> {
             Student student = new Student();
             student.setStudentName(name);
             em.persist(student);
         });
-
     }
 
     public static void updateStudent(String name, String newName) {
@@ -36,7 +29,6 @@ public class CrudStudent {
             TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.studentName = :name", Student.class).setParameter("name", name);
             List<Student> students = query.getResultList();
             for (Student s : students) {
-
                 TypedQuery<Grade> query2 = em.createQuery("SELECT g FROM Grade g WHERE g.gradeStudentID = :id", Grade.class).setParameter("id", s);
                 List<Grade> grades = query2.getResultList();
                 for (Grade g : grades) {
@@ -44,7 +36,6 @@ public class CrudStudent {
                 }
                 em.remove(s);
             }
-
         });
     }
 

@@ -19,7 +19,6 @@ public class AdminMenu {
 
             switch (choice) {
                 case "0" -> {
-                    System.out.println("\nExited");
                     running = false;
                     Main.printActionMainMenu();
                 }
@@ -44,7 +43,6 @@ public class AdminMenu {
                 }//deleteStudent
             }
         }
-
     }
 
     private static void addGrade() {
