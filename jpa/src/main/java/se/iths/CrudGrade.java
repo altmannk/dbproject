@@ -35,7 +35,7 @@ public class CrudGrade {
 
             });
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("error adding grade");
         }
     }
 

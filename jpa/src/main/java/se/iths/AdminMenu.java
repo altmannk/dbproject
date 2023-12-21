@@ -85,6 +85,46 @@ public class AdminMenu {
         printCrudAction();
     }
 
+    private static void updateGrade() {
+        Main.inTransaction(em -> {
+            boolean done = false;
+            List<Student> students;
+            String name = "";
+            while (!done) {
+                System.out.println("\nEnter student to update grade for.");
+                name = sc.nextLine();
+                TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.studentName =: name", Student.class).setParameter("name", name);
+                students = query.getResultList();
+                if (!students.isEmpty())
+                    done = true;
+            }
+
+            done = false;
+            List<Course> courses;
+            String course = "";
+
+            while (!done) {
+                System.out.println("\nEnter course to add update for:");
+                course = sc.nextLine();
+                TypedQuery<Course> query = em.createQuery("SELECT c FROM Course c WHERE c.courseName =: course", Course.class).setParameter("course", course);
+                courses = query.getResultList();
+                if (!courses.isEmpty())
+                    done = true;
+            }
+
+            done = false;
+            String grade = "";
+            while (!done) {
+                System.out.println("\nEnter grade value:");
+                grade = sc.nextLine();
+                if (grade.equals("G") || grade.equals("VG") || grade.equals("IG"))
+                    done = true;
+            }
+            CrudGrade.updateGrade(name, course, grade);
+        });
+        printCrudAction();
+    }
+
     private static void addStudent() {
 
         List<String> names = new ArrayList<>();
@@ -137,6 +177,47 @@ public class AdminMenu {
             CrudGrade.createGrade(studentName, course, grade);
         });
         printCrudAction();
+    }
+
+    private static void updateName() {
+        Main.inTransaction(em -> {
+            TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s", Student.class);
+            List<Student> students = query.getResultList();
+            List<String> names = new ArrayList<>();
+            for (Student s : students) {
+                names.add(s.getStudentName());
+            }
+
+            boolean done = false;
+            String name = "";
+            while (!done) {
+                System.out.println("\nEnter student name to change.");
+                name = sc.nextLine();
+                if (names.contains(name)) done = true;
+                else System.out.println("No student with that name");
+            }
+
+            done = false;
+            String newName = "";
+            while (!done) {
+                System.out.println("\nEnter new name.");
+                newName = sc.nextLine();
+                TypedQuery<Student> query2 = em.createQuery("SELECT s FROM Student s WHERE s.studentName =: name", Student.class).setParameter("name", newName);
+                students = query2.getResultList();
+                if (newName.isEmpty()) {
+                    System.out.println("Name cannot be empty");
+                } else if (!students.isEmpty()) System.out.println("That name is already taken");
+                else {
+                    CrudStudent.updateStudent(name, newName);
+                    done = true;
+                }
+            }
+
+            printCrudAction();
+
+        });
+
+
     }
 
 
