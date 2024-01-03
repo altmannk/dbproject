@@ -1,27 +1,46 @@
 package se.iths;
 
 import jakarta.persistence.TypedQuery;
+import org.hibernate.annotations.TypeRegistration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CrudGrade {
 
-    public static void createGrade(String studentName, String courseName, String grade){
-        Grade g = new Grade();
-        g.setGradeValue(grade);
-        Main.inTransaction(em ->{
-            TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.studentName = :studentName", Student.class).setParameter("studentName", studentName);
-            Student student = query.getSingleResult();
-            g.setGradeStudentID(student);
+    public static void createGrade(String studentName, String courseName, String grade) {
 
-            TypedQuery<Course> query2 = em.createQuery("SELECT c FROM Course c WHERE c.courseName = :courseName", Course.class).setParameter("courseName", courseName);
-            Course course = query2.getSingleResult();
-            g.setGradeCourseID(course);
+        try {
+            Main.inTransaction(em -> {
+                Grade g = new Grade();
+                g.setGradeValue(grade);
 
-            em.persist(g);
-        });
+                TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.studentName = :studentName", Student.class).setParameter("studentName", studentName);
+                Student student = query.getSingleResult();
+                g.setGradeStudentID(student);
+
+                TypedQuery<Course> query2 = em.createQuery("SELECT c FROM Course c WHERE c.courseName = :courseName", Course.class).setParameter("courseName", courseName);
+                Course course = query2.getSingleResult();
+                g.setGradeCourseID(course);
+
+                TypedQuery<Grade> gradeQuery = em.createQuery("SELECT g FROM Grade g WHERE g.gradeStudentID= :student", Grade.class).setParameter("student", student);
+                List<Grade> grades = gradeQuery.getResultList();
+                List<String> courseNames = new ArrayList<>();
+                for (Grade currGrade : grades) {
+                    courseNames.add(currGrade.getGradeCourseID().getCourseName());
+                }
+                if (!courseNames.contains(courseName)) {
+                    em.persist(g);
+                } else System.out.println("Grade already exists for this course");
+
+            });
+        } catch (Exception e) {
+            System.out.println("error adding grade");
+        }
     }
 
-    public static void updateGrade(String studentName, String courseName, String newGrade){
-        Main.inTransaction(em ->{
+    public static void updateGrade(String studentName, String courseName, String newGrade) {
+        Main.inTransaction(em -> {
             TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.studentName = :studentName", Student.class).setParameter("studentName", studentName);
             Student student = query.getSingleResult();
             Integer studentID = student.getId();
@@ -35,7 +54,5 @@ public class CrudGrade {
             Grade grade = query3.getSingleResult();
             grade.setGradeValue(newGrade);
         });
-        }
-
-
+    }
 }

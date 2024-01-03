@@ -7,23 +7,19 @@ import java.util.function.Consumer;
 
 public class Main {
 
-    private static final Scanner sc =  new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         EntityManager em = JPAUtil.getEntityManager();
 
-
-
         menu(em);
-
-
 
         em.close();
     }
 
     public static void printActionMainMenu() {
 
-      System.out.println("\nMenu\n");
+        System.out.println("\nMenu\n");
         System.out.println("""
                 0. Exit
                 1. Statistics for specific course
@@ -46,7 +42,6 @@ public class Main {
                     System.out.println("\nExit");
                     running = false;
                 }
-
                 case "1" -> StatisticsProgram.statisticsForSpecificCourse();
                 case "2" -> StatisticsProgram.statisticsForAllCourses();
                 case "3" -> AdminMenu.crudMenu();
